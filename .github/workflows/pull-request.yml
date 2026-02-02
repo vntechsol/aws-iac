@@ -36,3 +36,5 @@ jobs:
     secrets:
       aws_role_to_assume: ${{ secrets.AWS_PROD_GITHUB_ACTION_ROLE }}
       terraform_version: ${{ secrets.TERRAFORM_VERSION }}
+    env:
+      LEVEL: ${{ inputs.logLevel }}
