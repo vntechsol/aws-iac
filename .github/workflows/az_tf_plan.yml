@@ -5,25 +5,6 @@ permissions:
   id-token: write
   contents: read
 on:
-  workflow_dispatch:
-    inputs:
-      region:
-        description: "Specifies a region ie eu-west-1"
-        required: true
-        default: null
-        type: choice
-        options:
-          - eu-west-1
-          - eu-west-2
-      project_name:
-        description: "Specifies a project name ie payclip"
-        required: true
-        default: null
-        type: choice
-        options:
-          - bbva-arg
-          - nets
-          - wise
   workflow_call:
     inputs:
       path:
@@ -35,6 +16,14 @@ on:
         required: false
         type: boolean
         default: true
+      AWS_REGION:
+        description: "Specifies an AWS Region name"
+        required: true
+        type: string
+      PROJECT:
+        description: "Specifies a project name"
+        required: true
+        type: string
     secrets:
       aws_role_to_assume:
         description: "Specifies the AWS_GITHUB_ACTION_ROLE."
@@ -49,7 +38,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ inputs.path }}/${{ inputs.region }}/${{ inputs.project_name }}
+        working-directory: ${{ inputs.path }}/${{ inputs.AWS_REGION }}/${{ inputs.PROJECT }}
     env:
       ###AWS Provider details###
       AWS_GITHUB_ACTION_ROLE: ${{ secrets.aws_role_to_assume }}
