@@ -16,12 +16,8 @@ on:
         required: false
         type: boolean
         default: true
-      AWS_REGION:
-        description: "Specifies an AWS Region name"
-        required: true
-        type: string
-      PROJECT:
-        description: "Specifies a project name"
+      loglevel:
+        description: "Specifies log level option"
         required: true
         type: string
     secrets:
