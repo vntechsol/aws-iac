@@ -1,0 +1,38 @@
+name: "Push to Feature Branch"
+permissions:
+  id-token: write
+  contents: read
+  issues: read
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+  push:
+    branches:
+      - '*'
+      - '!main'
+    
+  pull_request:
+    branches:
+      - main
+  #
+  # pull_request_review:
+  #   types: [submitted]
+
+jobs:
+  validate-build:
+    uses: ./.github/workflows/az_tf_plan.yml
+    with:
+      path: files/accounts/datascience/environments
+      enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
+    secrets:
+      aws_role_to_assume: ${{ secrets.AWS_PROD_GITHUB_ACTION_ROLE }}
+      terraform_version: ${{ secrets.TERRAFORM_VERSION }}
