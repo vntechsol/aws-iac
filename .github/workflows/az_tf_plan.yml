@@ -6,15 +6,6 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      path:
-        description: "Specifies the path of the root terraform module."
-        required: true
-        type: string
-      enable_TFSEC:
-        description: "(Optional) Enables TFSEC IaC scans and code quality checks on Terraform configurations"
-        required: false
-        type: boolean
-        default: true
       region:
         description: "Specifies a region ie eu-west-1"
         required: true
@@ -33,6 +24,16 @@ on:
           - nets
           - wise
   workflow_call:
+    inputs:
+      path:
+          description: "Specifies the path of the root terraform module."
+          required: true
+          type: string
+      enable_TFSEC:
+        description: "(Optional) Enables TFSEC IaC scans and code quality checks on Terraform configurations"
+        required: false
+        type: boolean
+        default: true
     secrets:
       aws_role_to_assume:
         description: "Specifies the AWS_GITHUB_ACTION_ROLE."
