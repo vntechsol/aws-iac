@@ -15,20 +15,6 @@ on:
         - info
         - warning
         - debug
-      AWS_REGION:
-        description: "Specifies an AWS Region name"
-        required: true
-        type: choice
-        options:
-          - eu-west-1
-          - eu-west-2
-      PROJECT:
-        description: "Specifies a project name"
-        required: true
-        type: choice
-        options:
-          - wise
-          - fearless-fox-is
   push:
     branches:
       - '*'
