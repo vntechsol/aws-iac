@@ -6,6 +6,15 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
       AWS_REGION:
         description: "Specifies an AWS Region name"
         required: true
