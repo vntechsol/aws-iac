@@ -51,7 +51,7 @@ jobs:
     #   matrix:
     #     environment: [dev, stage, prod]
 
-    steps:
+    
       # TFLint Checkout Repository
       - name : Check out Git Repository
         uses: actions/checkout@v3  
