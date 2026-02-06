@@ -32,5 +32,5 @@ jobs:
       enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
     secrets:
       aws_role_to_assume: ${{ secrets.AWS_DEV_GITHUB_ACTION_ROLE }}
-      aws_default_region: ${{ env.AWS_REGION }}
+      aws_default_region: ${{ AWS_REGION }}
       terraform_version: ${{ secrets.TERRAFORM_VERSION }}
