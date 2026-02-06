@@ -3,11 +3,7 @@ module "s3_bucket" {
   # tflint-ignore: terraform_module_pinned_source
   source = "../../../../modules/s3/bucket" #"git@github.com:vntechsol/aws-iac.git//modules/s3/bucket"
 
-  enabled        = "true"
-  s3_bucket_name = "infratests3bucket"
-  additional_tags = {
-    "Cost Centre" = "INFRA"
-    Product       = "INFRA"
-    Service       = "IaC"
-  }
+  enabled         = var.config.s3_bucket.enabled
+  s3_bucket_name  = var.config.s3_bucket.s3_bucket_name
+  additional_tags = var.additional_tags
 }
