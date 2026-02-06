@@ -1,0 +1,33 @@
+#checkov:skip=CKV2_GHA_1 Ignore ensure top-level permissions are not set to write-all
+name: "Push to Feature Branch"
+permissions:
+  id-token: write
+  contents: read
+  issues: read
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '*'
+      - '!develop'
+      - '!stage'
+      - '!main'
+    
+  pull_request:
+    branches:
+      - main
+  
+  #
+  # pull_request_review:
+  #   types: [submitted]
+
+jobs:
+  validate-build:
+    uses: ./.github/workflows/az_tf_plan.yml
+    with:
+      path: files/accounts/datascience/environments/eu-west-2/wise
+      enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
+    secrets:
+      aws_role_to_assume: ${{ secrets.AWS_DEV_GITHUB_ACTION_ROLE }}
+      aws_default_region: eu-west-2
+      terraform_version: ${{ secrets.TERRAFORM_VERSION }}
