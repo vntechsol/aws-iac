@@ -25,7 +25,7 @@ jobs:
   validate-build:
     uses: ./.github/workflows/az_tf_plan.yml
     with:
-      path: files/accounts/datascience/environments/eu-west-2/wise
+      path: dev/eu-west-2/datascience/wise
       enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
     secrets:
       aws_role_to_assume: ${{ secrets.AWS_DEV_GITHUB_ACTION_ROLE }}
