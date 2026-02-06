@@ -75,5 +75,5 @@ jobs:
         env:
           environment: infra-test
         id: Apply
-        run: terraform apply -auto-approve -lock=true -refresh=true -var-file=${{ environment }}.tfvars
+        run: terraform apply -auto-approve -lock=true -refresh=true -var-file=${{ env.environment }}.tfvars
 
