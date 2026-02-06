@@ -18,8 +18,8 @@ on:
       - main
   
 env:
-  AWS_REGION: "eu-west-2"
-  PROJECT: "wise"
+  AWS_REGION: eu-west-2
+  PROJECT: wise
   #
   # pull_request_review:
   #   types: [submitted]
