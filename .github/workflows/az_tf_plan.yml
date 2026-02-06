@@ -171,4 +171,4 @@ jobs:
         env:
           environment: infra-test
         id: plan
-        run: terraform plan -lock=true -refresh=true -var-file=${{ env.environment }}
+        run: terraform plan -lock=true -refresh=true -var-file=${{ env.environment }}.tfvars
