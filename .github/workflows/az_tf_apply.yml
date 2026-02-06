@@ -1,0 +1,68 @@
+#checkov:skip=CKV2_GHA_1 ignore ensure top-level permissions are not set to write-all
+name: "Apply_TF_Plan"
+permissions:
+  id-token: write
+  contents: read
+on:
+  workflow_call:
+    inputs:
+      path:
+        description: "Specifies the path of the root terraform module."
+        required: true
+        type: string
+      gh_environment:
+        description: "Specifies the GitHub deployment environment."
+        required: false
+        type: string
+        default: null
+    secrets:
+      aws_role_to_assume:
+        description: "Specifies the AWS_GITHUB_ACTION_ROLE."
+        required: true
+      aws_default_region:
+        description: "Specifies the AWS_DEFAULT_REGION."
+        required: true
+      terraform_version:
+        description: "Specifies the TERRAFORM_VERSION."
+        required: true
+  
+jobs:
+  apply-plan:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.gh_environment }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ inputs.path }}
+    env:
+      ###AWS Provider details###
+      AWS_GITHUB_ACTION_ROLE: ${{ secrets.aws_role_to_assume }}
+      AWS_DEFAULT_REGION: ${{ secrets.aws_default_region }}
+      TERRAFORM_VERSION: ${{ secrets.terraform_version }}
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.aws_role_to_assume }}
+          aws-region: ${{ secrets.aws_default_region }}
+
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Install the selected version of Terraform CLI 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ secrets.terraform_version }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -get=true -input=false -reconfigure
+
+      # Terraform apply
+      - name: Terraform Apply
+        id: Apply
+        run: terraform apply -auto-approve -lock=true -refresh=true
+
