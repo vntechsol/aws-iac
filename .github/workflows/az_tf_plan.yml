@@ -30,6 +30,9 @@ on:
       terraform_version:
         description: "Specifies the TERRAFORM_VERSION."
         required: true
+      deploy_key:
+        description: "Specifies the DEPLOY_KEY"
+        required: true
 
 jobs:
   build-plan:
@@ -42,6 +45,7 @@ jobs:
       ###AWS Provider details###
       AWS_GITHUB_ACTION_ROLE: ${{ secrets.aws_role_to_assume }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
+      DEPLOY_KEY: ${{ secrets.deploy_key }}
     
     # strategy:
     #   matrix:
@@ -130,6 +134,15 @@ jobs:
       # Terraform checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: 'feature4'
+          ssh-key: ${{ secrets.deploy_key }}
+
+      - name: Configure git
+        run: |
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "GitHub Actions"
 
       # Install the selected version of Terraform CLI 
       - name: Setup Terraform
@@ -155,5 +168,7 @@ jobs:
 
       # Run a terraform plan
       - name: Terraform Plan
+        env:
+          environment: infra-test
         id: plan
-        run: terraform plan -lock=true -refresh=true
+        run: terraform plan -lock=false -refresh=true -var-file=${{ env.environment }}.tfvars
