@@ -134,15 +134,6 @@ jobs:
       # Terraform checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: 'feature4'
-          ssh-key: ${{ secrets.deploy_key }}
-
-      - name: Configure git
-        run: |
-          git config --local user.email "github-actions@github.com"
-          git config --local user.name "GitHub Actions"
 
       # Install the selected version of Terraform CLI 
       - name: Setup Terraform
