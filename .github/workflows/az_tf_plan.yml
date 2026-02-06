@@ -42,8 +42,6 @@ jobs:
       ###AWS Provider details###
       AWS_GITHUB_ACTION_ROLE: ${{ secrets.aws_role_to_assume }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
-      AWS_REGION: "eu-west-2"
-      PROJECT: "wise"
     
     # strategy:
     #   matrix:
@@ -127,7 +125,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.aws_role_to_assume }}
-          aws-region: ${{ AWS_REGION }}
+          aws-region: ${{ secrets.aws_default_region }}
 
       # Terraform checkout the repository to the GitHub Actions runner
       - name: Checkout
