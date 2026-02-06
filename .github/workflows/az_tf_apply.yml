@@ -25,6 +25,9 @@ on:
       terraform_version:
         description: "Specifies the TERRAFORM_VERSION."
         required: true
+      deploy_key:
+        description: "Specifies the DEPLOY_KEY"
+        required: true
   
 jobs:
   apply-plan:
