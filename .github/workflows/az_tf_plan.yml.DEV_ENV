@@ -46,6 +46,7 @@ jobs:
       AWS_GITHUB_ACTION_ROLE: ${{ secrets.aws_role_to_assume }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
       DEPLOY_KEY: ${{ secrets.deploy_key }}
+      working_dir: 'eu-west-2/datascience/wise'
     
     # strategy:
     #   matrix:
