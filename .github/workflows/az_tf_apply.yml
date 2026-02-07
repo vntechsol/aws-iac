@@ -80,6 +80,6 @@ jobs:
       - name: Terraform Apply
         id: Apply
         run: |
-          cd ${{ inputs.path }}/${{ env.working_dir }}
+          cd ${{ env.working_dir }}
           terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
 
