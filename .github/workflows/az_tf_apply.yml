@@ -71,7 +71,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ secrets.terraform_version }}
-          tg_dir: ${{ inputs.path }}/${{ env.working_dir }}
+          tf_dir: ${{ inputs.path }}/${{ env.working_dir }}
 
       - name: Terraform Init
         id: init

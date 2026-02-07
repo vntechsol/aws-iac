@@ -142,7 +142,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ secrets.terraform_version }}
-          tg_dir: ${{ inputs.path }}/${{ env.working_dir }}
 
       - name: Terraform Init
         id: init
@@ -163,4 +162,6 @@ jobs:
       # Run a terraform plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
+        run: |
+        cd ${{ inputs.path }}/${{ env.workding_dir }}
+        terraform plan -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
