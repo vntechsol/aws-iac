@@ -4,6 +4,5 @@ github event = https://docs.github.com/en/actions/reference/workflows-and-action
 
 github required reviewer = https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments
 
-#
 
 [link INSTRUCTION](INSTRUCTION.md)

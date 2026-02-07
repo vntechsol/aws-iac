@@ -3,6 +3,7 @@ name: "Apply_TF_Plan"
 permissions:
   id-token: write
   contents: read
+  issues: read
 on:
   workflow_call:
     inputs:
@@ -43,6 +44,7 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.aws_default_region }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
       DEPLOY_KEY: ${{ secrets.deploy_key }}
+      workding_dir: 'eu-west-2/datascience/wise'
 
     steps:
       - name: Configure AWS Credentials
@@ -69,6 +71,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ secrets.terraform_version }}
+          tg_dir: ${{ inputs.path }}/${{ env.working_dir }}
 
       - name: Terraform Init
         id: init
@@ -76,8 +79,6 @@ jobs:
 
       # Terraform apply
       - name: Terraform Apply
-        env:
-          environment: infra-test
         id: Apply
-        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ env.environment }}.tfvars
+        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
 
