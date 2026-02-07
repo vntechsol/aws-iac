@@ -161,6 +161,4 @@ jobs:
       # Run a terraform plan
       - name: Terraform Plan
         id: plan
-        run: |
-          #cd ${{ env.workding_dir }}
-          terraform plan -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
+        run: terraform plan -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
