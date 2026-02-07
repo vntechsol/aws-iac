@@ -48,6 +48,7 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.aws_default_region }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
       DEPLOY_KEY: ${{ secrets.deploy_key }}
+      workding_dir: 'eu-west-2/datascience/wise'
 
     steps:
       - name: Configure AWS Credentials
