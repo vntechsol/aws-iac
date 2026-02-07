@@ -71,7 +71,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ secrets.terraform_version }}
-          tf_dir: ${{ inputs.path }}/${{ env.working_dir }}
 
       - name: Terraform Init
         id: init
@@ -80,5 +79,7 @@ jobs:
       # Terraform apply
       - name: Terraform Apply
         id: Apply
-        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
+        run: |
+          cd ${{ inputs.path }}/${{ env.working_dir }}
+          terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
 
