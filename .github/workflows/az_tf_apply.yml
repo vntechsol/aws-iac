@@ -3,6 +3,7 @@ name: "Apply_TF_Plan"
 permissions:
   id-token: write
   contents: read
+  issues: read
 on:
   workflow_call:
     inputs:
@@ -12,9 +13,8 @@ on:
         type: string
       gh_environment:
         description: "Specifies the GitHub deployment environment."
-        required: false
+        required: true
         type: string
-        default: null
     secrets:
       aws_role_to_assume:
         description: "Specifies the AWS_GITHUB_ACTION_ROLE."
@@ -43,6 +43,7 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.aws_default_region }}
       TERRAFORM_VERSION: ${{ secrets.terraform_version }}
       DEPLOY_KEY: ${{ secrets.deploy_key }}
+      workding_dir: 'eu-west-2/datascience/wise'
 
     steps:
       - name: Configure AWS Credentials
@@ -76,8 +77,6 @@ jobs:
 
       # Terraform apply
       - name: Terraform Apply
-        env:
-          environment: infra-test
         id: Apply
-        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ env.environment }}.tfvars
+        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
 
