@@ -14,8 +14,9 @@ jobs:
     #uses: linh5847/aws-terraform-github-action-cicd/.github/workflows/az_tf_plan.yml@main # @main means github branch
     uses: ./.github/workflows/az_tf_plan.yml
     with:
-      path: dev
+      path: dev/eu-west-2/datascience/wise
       enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
+      gh_environment: dev
     secrets:
       aws_role_to_assume: ${{ secrets.AWS_DEV_GITHUB_ACTION_ROLE }}
       aws_default_region: eu-west-2
@@ -26,7 +27,9 @@ jobs:
     needs: Plan_Prod
     uses: ./.github/workflows/az_tf_apply.yml
     with:
-      path: dev
+      path: dev/eu-west-2/datascience/wise
+      enable_TFSEC: true ## (Optional)  Enable TFSEC IaC scans (Private repo requires GitHub enterprise)
+      gh_environment: dev
     secrets:
       aws_role_to_assume: ${{ secrets.AWS_DEV_GITHUB_ACTION_ROLE }}
       aws_default_region: eu-west-2

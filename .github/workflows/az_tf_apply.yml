@@ -13,9 +13,8 @@ on:
         type: string
       gh_environment:
         description: "Specifies the GitHub deployment environment."
-        required: false
+        required: true
         type: string
-        default: null
     secrets:
       aws_role_to_assume:
         description: "Specifies the AWS_GITHUB_ACTION_ROLE."
@@ -80,6 +79,6 @@ jobs:
       - name: Terraform Apply
         id: Apply
         run: |
-          cd ${{ env.working_dir }}
-          terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
+          #cd ${{ env.working_dir }}
+          terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
 

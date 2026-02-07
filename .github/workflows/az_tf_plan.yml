@@ -13,9 +13,8 @@ on:
         type: string
       gh_environment:
         description: "Specifies the GitHub deployment environment."
-        required: false
+        required: true
         type: string
-        default: null
       enable_TFSEC:
         description: "(Optional) Enables TFSEC IaC scans and code quality checks on Terraform configurations"
         required: false
@@ -163,5 +162,5 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: |
-          cd ${{ env.workding_dir }}
-          terraform plan -lock=false -refresh=true -var-file=${{ inputs.path }}.tfvars
+          #cd ${{ env.workding_dir }}
+          terraform plan -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
