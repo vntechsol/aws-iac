@@ -160,4 +160,4 @@ jobs:
       # Run a terraform plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -lock=false -refresh=true
+        run: terraform plan -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
