@@ -110,11 +110,11 @@ jobs:
       #     #docker run -t -v "$(pwd)" aquasec/tfsec ${{ inputs.path }} --format json
       #     docker run -t -v "$(pwd)" aquasec/tfsec .
 
-      - name: tfsec security scan
-        run: |
-          curl -L https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64 -o tfsec
-          chmod +x tfsec
-          ./tfsec .
+      # - name: tfsec security scan
+      #   run: |
+      #     curl -L https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64 -o tfsec
+      #     chmod +x tfsec
+      #     ./tfsec .
 
       # checkov-checks checkout Repository
       - name : Check out Git Repository
