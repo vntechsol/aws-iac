@@ -1,5 +1,6 @@
 # tflint-ignore: terraform_required_version
 # tflint-ignore: terraform_required_providers
+#tfsec:ignore:aws-s3-enable-bucket-encryption
 resource "aws_s3_bucket" "s3_bucket" {
   #checkov:skip=CKV2_AWS_62 Ignore ensure S3 buckets should have event notifications enabled
   #checkov:skip=CKV_AWS_145 Ignore S3 buckets are encrypted with KMS

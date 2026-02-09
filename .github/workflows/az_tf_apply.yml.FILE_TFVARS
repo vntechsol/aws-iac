@@ -82,5 +82,5 @@ jobs:
       # Terraform apply
       - name: Terraform Apply
         id: Apply
-        run: terraform apply -auto-approve -lock=false -refresh=true
+        run: terraform apply -auto-approve -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
 

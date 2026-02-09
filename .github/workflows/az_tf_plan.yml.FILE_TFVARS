@@ -77,8 +77,8 @@ jobs:
           key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
         
       # Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
-      # - name: Run TFLint
-      #   run: tflint -f compact --recursive
+      - name: Run TFLint
+        run: tflint -f compact --recursive
 
       # TFSec Checkout Repository
       - name: Clone repo
@@ -99,22 +99,22 @@ jobs:
       #     # Path to SARIF file relative to the root of the repository
       #     sarif_file: tfsec.sarif
 
-      # - name: Pull Request Commenter
-      #   if: ${{ github.event_name == 'pull_request' }} 
-      #   uses: tfsec/tfsec-pr-commenter-action@main #aquasecurity/tfsec-pr-commenter-action@v1.0.2
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull Request Commenter
+        if: ${{ github.event_name == 'pull_request' }} 
+        uses: tfsec/tfsec-pr-commenter-action@main #aquasecurity/tfsec-pr-commenter-action@v1.0.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: tfsec scan result
       #   run: |
       #     #docker run -t -v "$(pwd)" aquasec/tfsec ${{ inputs.path }} --format json
       #     docker run -t -v "$(pwd)" aquasec/tfsec .
 
-      # - name: tfsec security scan
-      #   run: |
-      #     curl -L https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64 -o tfsec
-      #     chmod +x tfsec
-      #     ./tfsec .
+      - name: tfsec security scan
+        run: |
+          curl -L https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec-linux-amd64 -o tfsec
+          chmod +x tfsec
+          ./tfsec .
 
       # checkov-checks checkout Repository
       - name : Check out Git Repository
@@ -160,4 +160,4 @@ jobs:
       # Run a terraform plan
       - name: Terraform Plan
         id: plan
-        run: terraform plan -lock=false -refresh=true
+        run: terraform plan -lock=false -refresh=true -var-file=${{ inputs.gh_environment }}.tfvars
